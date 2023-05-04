@@ -1,0 +1,22 @@
+{
+    "name": "Snickers",
+    "short_name": "SNKRS",
+    "icons": [
+      {
+        "src": "iconSHOE2.png",
+        "type": "image/png",
+        "sizes": "128x128"
+      },
+      {
+        "src": "iconSHOE1.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/index.html",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#000000"
+  }
+  
