@@ -40,6 +40,31 @@ export default {
             });
         },
 
+
+        ShowMap() {
+    var mymap = L.map('mymap').setView([0, 0], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+    }).addTo(mymap);
+    
+    
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    
+
+    function showPosition(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      console.log("Latitude: " + latitude + ", Longitude: " + longitude);
+      mymap.setView([latitude, longitude], 13);
+      L.marker([latitude, longitude]).addTo(mymap);
+    }},
+
         async getItem() {
             this.item = {"name": ""};
             const items = collection(db, "items");
@@ -112,16 +137,19 @@ export default {
 
         async share() {
             navigator.share({
-                url: "https://genbl4.github.io/item/" + this.item.id,
+                url: "https://marcelniwicki.github.io/item/" + this.item.id,
                 text: "Hey! Look at these awesome sneakers i found!",
                 title: "Share"
             });
         }
     },
 
+    
+
     async mounted() {
         await this.getItem();
         await this.getAvailable();
+        this.ShowMap();
     }
 
 }
@@ -184,9 +212,13 @@ export default {
             </div>
         </div>
     </div>
+    <div class="centered"><h2>Find Your location</h2>
+<div id="mymap"></div></div>
 </template>
 
 <style>
+    #mymap {height: 300px; width: 400px;}
+
     .item-page-main {
         padding: 10px 100px 0 100px;
     }
@@ -227,4 +259,10 @@ export default {
         font-style: italic;
         font-size: 28px !important;
     }
+    .centered {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+} 
 </style>
